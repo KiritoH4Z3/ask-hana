@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ask Hana, a RAG demo</title>
+<meta name="description" content="Ask questions about Hana Idris, a fictional hydrographic surveyor in Fujairah. Every answer shows the passages it came from and how closely they matched.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/hanken-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/ibm-plex-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<script src="theme.js"></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#ask">Skip to the question box</a>
+<div class="page">
+  <header class="top">
+    <div class="brand">
+      <img src="favicon.svg" alt="" width="28" height="28">
+      <h1>Ask Hana</h1>
+    </div>
+    <p class="badge" id="mode-badge" role="status">Checking server</p>
+    <button class="theme" id="theme-toggle" type="button" aria-pressed="false">Night chart</button>
+  </header>
+
+  <main class="layout">
+    <section class="chat" aria-label="Conversation">
+      <div class="intro" id="intro">
+        <h2>Ask about Hana. See where each answer comes from.</h2>
+        <p>Hana Idris maps the seabed for a living. Ask about her work, her gear, her dives or her weekends. Each answer comes only from her documents and shows the passages it was built from, scored against a confidence line.</p>
+        <p class="fiction">Hana is fictional. The documents are invented for this demo.</p>
+        <ul class="suggest" id="suggest">
+          <li><button type="button" data-q="What does Hana do for work?">What does Hana do for work?</button></li>
+          <li><button type="button" data-q="What survey equipment does she use?">What survey equipment does she use?</button></li>
+          <li><button type="button" data-q="What is Tidebook?">What is Tidebook?</button></li>
+          <li><button type="button" data-q="What are her hobbies?">What are her hobbies?</button></li>
+          <li><button type="button" data-q="Which languages does she speak?">Which languages does she speak?</button></li>
+          <li><button type="button" data-q="What is her cat called?">What is her cat called?</button></li>
+        </ul>
+      </div>
+
+      <div class="log" id="log" role="log" aria-live="polite" aria-relevant="additions" aria-label="Answers"></div>
+      <noscript><p class="notice">The chat needs JavaScript. Enable it and reload.</p></noscript>
+
+      <form class="composer" id="ask" autocomplete="off">
+        <label for="question">Ask about Hana</label>
+        <div class="row">
+          <textarea id="question" name="question" rows="2" placeholder="Ask about her work or dives" maxlength="500" enterkeyhint="send" aria-describedby="hint"></textarea>
+          <button class="send" id="send" type="submit">Ask</button>
+        </div>
+        <p class="meta" id="hint"><span>Enter sends, Shift+Enter adds a line.</span><span class="num" id="count" aria-live="off"></span></p>
+      </form>
+    </section>
+
+    <aside class="knows-wrap" aria-label="Documents">
+      <details class="knows" id="knows">
+        <summary>What it knows</summary>
+        <ul class="docs" id="docs"><li class="msg">Loading the document list</li></ul>
+      </details>
+    </aside>
+  </main>
+
+  <footer class="foot">
+    <p>A RAG demo. Documents are split into passages, embedded and stored in a vector database, and the closest passages go to a model that answers from them.</p>
+    <p>Hana is fictional. Source code and notes: <a href="https://github.com/KiritoH4Z3/ask-hana">github.com/KiritoH4Z3/ask-hana</a></p>
+  </footer>
+</div>
+</body>
+</html>
