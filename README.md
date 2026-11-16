@@ -5,7 +5,7 @@
 [![ChromaDB](https://img.shields.io/badge/ChromaDB-vector%20store-FF6446)](https://www.trychroma.com/)
 [![Claude API](https://img.shields.io/badge/Claude%20API-optional-D97757)](https://docs.anthropic.com/)
 [![Ollama](https://img.shields.io/badge/Ollama-optional-000000)](https://ollama.com/)
-[![Tests](https://img.shields.io/badge/tests-230%20passing-2EA44F)](#results)
+[![Tests](https://img.shields.io/badge/tests-236%20passing-2EA44F)](#results)
 [![MIT](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
 
 A chatbot that answers only from a small pile of documents, shows you the passages it used, and says "I could not find that" when the documents do not cover the question.
@@ -94,8 +94,8 @@ Everything is read once at startup from the environment or `.env`. `.env.example
 | --- | --- | --- |
 | `ASK_HANA_PROVIDER` | `auto` | `auto`, `claude`, `ollama` or `extractive` |
 | `ANTHROPIC_API_KEY` | unset | Enables Claude |
-| `CLAUDE_MODEL` | `claude-opus-5-5` | Model id |
-| `CLAUDE_EFFORT` | `low` | `low`, `medium` or `high` |
+| `ASK_HANA_CLAUDE_MODEL` | `claude-opus-5-5` | Claude model id |
+| `ASK_HANA_CLAUDE_EFFORT` | `low` | `low`, `medium`, `high`, `xhigh` or `max` |
 | `OLLAMA_URL` | `http://127.0.0.1:11434` | Ollama server |
 | `OLLAMA_MODEL` | unset | Model name; `auto` considers Ollama only when this is set |
 | `KNOWLEDGE_DIR` | `./knowledge` | Where the markdown lives |
@@ -199,7 +199,7 @@ The local model's band is 37/38 to 38/38: at temperature 0.2 one question moves 
 
 A prompt change that asked for "two to four sentences, ending once answered" instead of "about 100 words or fewer" cut the mean grounded answer from 68.9 and 71.3 words (two runs) to 42.8 and 44.6, at 38/38 and 37/38 against 35/38 and 38/38 before. Details and the run history are in `eval/results/answers.md`.
 
-**Tests:** `uv run pytest` gives 230 passed (unit, API, copy rules, contrast, static-page checks, and the generated promptfoo assertions run in Node). `ruff check` is clean.
+**Tests:** `uv run pytest` gives 236 passed (unit, API, copy rules, contrast, static-page checks, and the generated promptfoo assertions run in Node). `ruff check` is clean.
 
 **Accessibility:** `tests/test_contrast.py` checks every text and surface pair in both themes against AA with a 5.0:1 floor for text (AA is 4.5:1). `docs/DESIGN.md` section 15 records an AccessLint `audit_live` pass on the answered page and a keyboard-only run; AAA enhanced contrast reports 6.0 to 6.9:1 on muted text, which is accepted.
 

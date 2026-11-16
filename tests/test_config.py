@@ -3,6 +3,8 @@
 #   claim Claude while serving extractive answers)
 # - a bad number in .env being coerced or ignored instead of refusing to start
 # - the API key leaking through repr() into a log line
+# - a variable exported by another tool (Claude Code sets CLAUDE_EFFORT in its shells) being read
+#   as this app's setting, which refused startup or silently changed the model's effort
 from __future__ import annotations
 
 import pytest
@@ -36,7 +38,7 @@ def test_overrides_are_read():
             "MIN_SCORE": "0.5",
             "PORT": "4000",
             "OLLAMA_URL": "http://h:1/",
-            "CLAUDE_EFFORT": "HIGH",
+            "ASK_HANA_CLAUDE_EFFORT": "HIGH",
         }
     )
     assert (s.top_k, s.min_score, s.port, s.ollama_url, s.claude_effort) == (
@@ -52,7 +54,7 @@ def test_overrides_are_read():
     ("env", "needle"),
     [
         ({"ASK_HANA_PROVIDER": "gpt"}, "ASK_HANA_PROVIDER"),
-        ({"CLAUDE_EFFORT": "max"}, "CLAUDE_EFFORT"),
+        ({"ASK_HANA_CLAUDE_EFFORT": "extreme"}, "ASK_HANA_CLAUDE_EFFORT"),
         ({"TOP_K": "0"}, "TOP_K"),
         ({"TOP_K": "9"}, "TOP_K"),
         ({"TOP_K": "four"}, "TOP_K"),
@@ -65,6 +67,24 @@ def test_bad_values_refuse_with_the_variable_name(env, needle):
     with pytest.raises(ConfigError) as err:
         load_settings(env)
     assert needle in str(err.value)
+
+
+def test_ingest_starts_inside_a_claude_code_shell():
+    """Reported symptom: `uv run ask-hana-ingest` refused to start in a Claude Code terminal with
+    "CLAUDE_EFFORT must be one of low, medium, high, got 'xhigh'". Claude Code exports its own
+    CLAUDE_EFFORT and CLAUDE_CODE_* variables; none of them may reach this app's settings."""
+    shell = {
+        "CLAUDE_EFFORT": "xhigh",
+        "CLAUDE_MODEL": "some-editor-model",
+        "CLAUDE_CODE_ENTRYPOINT": "cli",
+    }
+    s = load_settings(shell)
+    assert (s.claude_model, s.claude_effort) == ("claude-opus-5-5", "low")
+
+
+@pytest.mark.parametrize("effort", ["low", "medium", "high", "xhigh", "max"])
+def test_every_opus_effort_level_is_accepted(effort):
+    assert load_settings({"ASK_HANA_CLAUDE_EFFORT": effort}).claude_effort == effort
 
 
 def test_repr_hides_the_key():

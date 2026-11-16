@@ -16,7 +16,9 @@ from .errors import ConfigError, safe_url
 log = logging.getLogger("ask_hana.config")
 
 PROVIDERS = ("auto", "claude", "ollama", "extractive")
-EFFORTS = ("low", "medium", "high")
+EFFORTS = ("low", "medium", "high", "xhigh", "max")
+# The Claude settings carry the ASK_HANA_ prefix on purpose: Claude Code exports its own
+# CLAUDE_EFFORT into every shell it opens, and reading that would hijack this app's setting.
 
 
 @dataclass(frozen=True)
@@ -79,16 +81,17 @@ def load_settings(env: Mapping[str, str] | None = None) -> Settings:
             f"ASK_HANA_PROVIDER must be one of {', '.join(PROVIDERS)}, got {provider!r}. "
             "Fix it in .env."
         )
-    effort = (_get(env, "CLAUDE_EFFORT") or "low").lower()
+    effort = (_get(env, "ASK_HANA_CLAUDE_EFFORT") or "low").lower()
     if effort not in EFFORTS:
         raise ConfigError(
-            f"CLAUDE_EFFORT must be one of {', '.join(EFFORTS)}, got {effort!r}. Fix it in .env."
+            f"ASK_HANA_CLAUDE_EFFORT must be one of {', '.join(EFFORTS)}, got {effort!r}. "
+            "Fix it in .env."
         )
 
     return Settings(
         provider=provider,
         anthropic_api_key=_get(env, "ANTHROPIC_API_KEY"),
-        claude_model=_get(env, "CLAUDE_MODEL") or Settings.claude_model,
+        claude_model=_get(env, "ASK_HANA_CLAUDE_MODEL") or Settings.claude_model,
         claude_effort=effort,
         ollama_url=(_get(env, "OLLAMA_URL") or Settings.ollama_url).rstrip("/"),
         ollama_model=_get(env, "OLLAMA_MODEL"),

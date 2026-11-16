@@ -100,7 +100,10 @@ def claude_auth_hint() -> str:
 
 
 def claude_model_missing_hint(model: str) -> str:
-    return f"Anthropic does not know the model {model}. Check CLAUDE_MODEL in .env, then restart."
+    return (
+        f"Anthropic does not know the model {model}. "
+        "Check ASK_HANA_CLAUDE_MODEL in .env, then restart."
+    )
 
 
 def claude_unavailable_hint() -> str:

@@ -170,7 +170,7 @@ def test_visitor_message_and_operator_hint_are_separate():
             claude(FakeClient(error=status_error(cls, code))).generate("q", [make_hit()])
         msgs[err.value.code] = err.value
     assert "ANTHROPIC_API_KEY" in msgs["provider_auth"].hint
-    assert "CLAUDE_MODEL" in msgs["provider_model_missing"].hint
+    assert "ASK_HANA_CLAUDE_MODEL" in msgs["provider_model_missing"].hint
     assert "claude-opus-5-5" in msgs["provider_model_missing"].hint
     for err in msgs.values():
         for leak in ("ANTHROPIC", "CLAUDE_MODEL", ".env", "claude-opus", "restart"):
