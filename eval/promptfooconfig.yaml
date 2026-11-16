@@ -1,0 +1,20 @@
+# Answer-quality eval for ask-hana. Drives a running app over HTTP.
+# Start it first: ASK_HANA_PROVIDER=ollama OLLAMA_MODEL=qwen3.5:9b CHROMA_PATH=./data/chroma-eval \
+#   PORT=3013 RATE_LIMIT_PER_MINUTE=1000 uv run ask-hana
+# Then: python3 eval/build_promptfoo_tests.py && promptfoo eval -c eval/promptfooconfig.yaml --no-cache --max-concurrency 1
+description: ask-hana answer quality
+prompts:
+  - "{{question}}"
+providers:
+  - id: http://127.0.0.1:3013/api/chat
+    label: ask-hana
+    config:
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        question: "{{question}}"
+      transformResponse: json
+      validateStatus: "status >= 200 && status < 300"
+      timeout: 120000
+tests: file://promptfoo_tests.yaml

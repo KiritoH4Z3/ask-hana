@@ -1,0 +1,107 @@
+{
+  "index": {
+    "documents": 11,
+    "chunks": 76,
+    "words": 3832,
+    "seconds": 1.83
+  },
+  "top_k": 4,
+  "answerable": 26,
+  "hit_at_1": 0.885,
+  "hit_at_k": 1.0,
+  "mrr": 0.936,
+  "max_score": {
+    "answerable": {
+      "n": 26,
+      "min": 0.35,
+      "median": 0.495,
+      "max": 0.777
+    },
+    "not_answerable": {
+      "n": 12,
+      "min": 0.137,
+      "median": 0.199,
+      "max": 0.53
+    },
+    "unanswerable": {
+      "n": 6,
+      "min": 0.137,
+      "median": 0.217,
+      "max": 0.282
+    },
+    "offtopic": {
+      "n": 3,
+      "min": 0.144,
+      "median": 0.162,
+      "max": 0.167
+    },
+    "injection": {
+      "n": 3,
+      "min": 0.188,
+      "median": 0.301,
+      "max": 0.53
+    }
+  },
+  "chosen_min_score": 0.33,
+  "at_chosen": {
+    "precision": 0.963,
+    "recall": 1.0,
+    "false_grounded": 1,
+    "of_not_answerable": 12
+  },
+  "misses": [],
+  "not_rank1": [
+    "q01",
+    "q13",
+    "q23"
+  ],
+  "low_answerable": [
+    [
+      "q05",
+      0.35
+    ],
+    [
+      "q15",
+      0.364
+    ],
+    [
+      "q19",
+      0.376
+    ],
+    [
+      "q03",
+      0.38
+    ],
+    [
+      "q13",
+      0.38
+    ]
+  ],
+  "high_unanswerable": [
+    [
+      "q37",
+      "injection",
+      0.53
+    ],
+    [
+      "q38",
+      "injection",
+      0.301
+    ],
+    [
+      "q27",
+      "unanswerable",
+      0.282
+    ],
+    [
+      "q32",
+      "unanswerable",
+      0.26
+    ],
+    [
+      "q28",
+      "unanswerable",
+      0.226
+    ]
+  ]
+}

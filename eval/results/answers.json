@@ -1,0 +1,163 @@
+{
+  "tests": 38,
+  "model_ollama": "qwen3.5:9b",
+  "min_score": 0.33,
+  "ollama_runs": {
+    "baseline_run_1": {
+      "passed": 36,
+      "total": 38,
+      "pass_rate": 0.947,
+      "by_kind": {
+        "fact": "10/10",
+        "injection": "3/3",
+        "multi": "3/3",
+        "offtopic": "3/3",
+        "paraphrase": "11/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 8.81,
+      "latency_p90_s": 27.12
+    },
+    "baseline_run_2": {
+      "passed": 37,
+      "total": 38,
+      "pass_rate": 0.974,
+      "by_kind": {
+        "fact": "10/10",
+        "injection": "3/3",
+        "multi": "3/3",
+        "offtopic": "3/3",
+        "paraphrase": "12/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 8.21,
+      "latency_p90_s": 22.13
+    },
+    "final_run": {
+      "passed": 38,
+      "total": 38,
+      "pass_rate": 1.0,
+      "by_kind": {
+        "fact": "10/10",
+        "injection": "3/3",
+        "multi": "3/3",
+        "offtopic": "3/3",
+        "paraphrase": "13/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 7.19,
+      "latency_p90_s": 11.44
+    },
+    "review_before_prompt_change_run_1": {
+      "passed": 35,
+      "total": 38,
+      "pass_rate": 0.921,
+      "by_kind": {
+        "fact": "9/10",
+        "injection": "3/3",
+        "multi": "2/3",
+        "offtopic": "3/3",
+        "paraphrase": "12/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 6.85,
+      "latency_p90_s": 9.1,
+      "answer_words_mean": 68.9,
+      "grounded_answers": 27,
+      "prompt": "about 100 words or fewer",
+      "note": "3 failures were 'meters' spelling against the tightened fact check; fixed in golden.jsonl afterwards"
+    },
+    "review_before_prompt_change_run_2": {
+      "passed": 38,
+      "total": 38,
+      "pass_rate": 1.0,
+      "by_kind": {
+        "fact": "10/10",
+        "injection": "3/3",
+        "multi": "3/3",
+        "offtopic": "3/3",
+        "paraphrase": "13/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 6.65,
+      "latency_p90_s": 8.38,
+      "answer_words_mean": 71.3,
+      "grounded_answers": 27,
+      "prompt": "about 100 words or fewer"
+    },
+    "review_after_prompt_change_run_1": {
+      "passed": 38,
+      "total": 38,
+      "pass_rate": 1.0,
+      "by_kind": {
+        "fact": "10/10",
+        "injection": "3/3",
+        "multi": "3/3",
+        "offtopic": "3/3",
+        "paraphrase": "13/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 4.31,
+      "latency_p90_s": 5.56,
+      "answer_words_mean": 42.8,
+      "grounded_answers": 27,
+      "prompt": "two to four sentences, ending once answered"
+    },
+    "review_after_prompt_change_run_2": {
+      "passed": 37,
+      "total": 38,
+      "pass_rate": 0.974,
+      "by_kind": {
+        "fact": "10/10",
+        "injection": "3/3",
+        "multi": "3/3",
+        "offtopic": "3/3",
+        "paraphrase": "12/13",
+        "unanswerable": "6/6"
+      },
+      "latency_median_s": 4.35,
+      "latency_p90_s": 6.0,
+      "answer_words_mean": 44.6,
+      "grounded_answers": 27,
+      "prompt": "two to four sentences, ending once answered",
+      "note": "q16 failed on 'four minutes and 10 seconds' phrasing; golden.jsonl now accepts it, not re-run"
+    }
+  },
+  "extractive": {
+    "passed": 31,
+    "total": 38,
+    "pass_rate": 0.816,
+    "by_kind": {
+      "fact": "10/10",
+      "injection": "3/3",
+      "multi": "0/3",
+      "offtopic": "3/3",
+      "paraphrase": "9/13",
+      "unanswerable": "6/6"
+    },
+    "latency_median_s": 0.16,
+    "latency_p90_s": 0.17,
+    "answer_words_mean": 37.7,
+    "grounded_answers": 27
+  },
+  "extractive_before_review": {
+    "passed": 30,
+    "total": 38,
+    "pass_rate": 0.789,
+    "by_kind": {
+      "fact": "9/10",
+      "injection": "2/3",
+      "multi": "0/3",
+      "offtopic": "3/3",
+      "paraphrase": "10/13",
+      "unanswerable": "6/6"
+    },
+    "latency_median_s": 0.26,
+    "latency_p90_s": 0.43
+  },
+  "notes": [
+    "Baseline runs used the old golden fact '9 so far' for q12, which the model wrote as 'nine'. q12 now accepts '9|nine'.",
+    "Review pass: fact matching moved to word and digit boundaries and the decline check was narrowed, so the first run after that change used golden facts that lacked 'meters' variants.",
+    "The prompt change (two to four sentences, ending once answered) was kept: 37/38 or better on both runs and mean grounded answer length fell from about 70 to about 44 words."
+  ]
+}
