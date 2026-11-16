@@ -1,0 +1,27 @@
+# Secrets: never committed. Copy .env.example to .env instead.
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# The vector database is rebuilt from knowledge/ by `uv run ask-hana-ingest`
+data/
+
+# Tooling output
+.playwright-cli/
+.promptfoo/
+eval/results/*.raw.json
+progress.log
+*.log
+.DS_Store

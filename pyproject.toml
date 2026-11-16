@@ -1,0 +1,40 @@
+[project]
+name = "ask-hana"
+version = "0.1.0"
+readme = "README.md"
+description = "A small RAG chatbot over a fictional person's documents: ChromaDB, local embeddings, three answer modes."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]",
+  "chromadb",
+  "anthropic",
+  "httpx",
+  "python-dotenv",
+]
+
+[dependency-groups]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+ask-hana = "ask_hana.app:main"
+ask-hana-ingest = "ask_hana.ingest:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ask_hana"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
