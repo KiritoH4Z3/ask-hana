@@ -164,6 +164,7 @@ def scanned_files() -> list[tuple[Path, str]]:
         *sorted((ROOT / "docs").rglob("*.md")),
         *sorted((ROOT / "eval").rglob("*.md")),
         *sorted((ROOT / "eval").glob("*.yaml")),
+        *sorted((ROOT / ".github").rglob("*.yml")),
     ]
     for path in candidates:
         if path.is_file():
@@ -317,6 +318,7 @@ EXCLUDED = {
     "uv.lock": "generated lockfile",
     "eval/results/answers.json": "machine output; the prose is in answers.md",
     "eval/results/retrieval.json": "machine output; the prose is in retrieval.md",
+    "eval/results/ablation.json": "machine output; the prose is in ablation.md",
     "eval/promptfoo_tests.yaml": "generated from golden.jsonl; its regexes quote refusal phrases",
     "eval/promptfooconfig.yaml": "provider wiring, no visitor copy",
     ".gitignore": "ignore patterns",

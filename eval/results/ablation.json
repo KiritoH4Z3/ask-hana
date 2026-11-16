@@ -1,0 +1,45 @@
+{
+  "top_k": 4,
+  "results": [
+    {
+      "variant": "shipped: prefix, 180-word windows",
+      "chunks": 76,
+      "hit_at_1": 0.885,
+      "hit_at_k": 1.0,
+      "mrr": 0.936,
+      "multi_all_docs_at_k": "3/3",
+      "weakest_answerable_top": 0.35,
+      "strongest_unanswerable_top": 0.282
+    },
+    {
+      "variant": "no Title > Section prefix",
+      "chunks": 76,
+      "hit_at_1": 0.769,
+      "hit_at_k": 1.0,
+      "mrr": 0.865,
+      "multi_all_docs_at_k": "3/3",
+      "weakest_answerable_top": 0.325,
+      "strongest_unanswerable_top": 0.263
+    },
+    {
+      "variant": "prefix, 120-word windows",
+      "chunks": 76,
+      "hit_at_1": 0.885,
+      "hit_at_k": 1.0,
+      "mrr": 0.936,
+      "multi_all_docs_at_k": "3/3",
+      "weakest_answerable_top": 0.35,
+      "strongest_unanswerable_top": 0.282
+    },
+    {
+      "variant": "prefix, 250-word windows",
+      "chunks": 76,
+      "hit_at_1": 0.885,
+      "hit_at_k": 1.0,
+      "mrr": 0.936,
+      "multi_all_docs_at_k": "3/3",
+      "weakest_answerable_top": 0.35,
+      "strongest_unanswerable_top": 0.282
+    }
+  ]
+}

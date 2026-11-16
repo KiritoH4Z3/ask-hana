@@ -37,3 +37,11 @@ What is checked, all deterministic (no model grader):
 Limits to keep in mind when reading a pass rate. `MIN_SCORE` is fitted on the same 38 questions this suite grades, so the numbers are in-sample, not held out. The lowest answerable best score is 0.35 against a 0.33 line, a margin of 0.02. The checks are deterministic string and number tests, not a judge of whether an answer is right in spirit, so a wrong answer that happens to contain the expected fact passes.
 
 `summarize_promptfoo.py` also prints the mean and median word count of grounded answers, which is how a prompt change that shortens answers gets measured. `results/answers.md` and `results/answers.json` hold the latest numbers per mode and the history of runs. Local model sampling shifts one or two questions between runs.
+
+## 3. Retrieval ablation (no server, no model)
+
+```bash
+uv run python eval/ablate_retrieval.py
+```
+
+Builds one throwaway index per variant and scores each on the same golden questions: the shipped settings, no `Title > Section` prefix on embedded chunks, and 120-word and 250-word windows. It also reports all-docs@k for the two-document questions, which hit@k cannot show because hit@k counts a question as found when any one expected document is retrieved. Production code is untouched: the script patches the chunker's constants for one build at a time and restores them. Results go to `results/ablation.md` and `results/ablation.json`. On this corpus the prefix moves hit@1 from 0.769 to 0.885; the window size changes nothing, because no section is longer than 108 words.
